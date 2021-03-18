@@ -9,15 +9,15 @@ mongo = PyMongo(app)
 
 @app.route('/')
 def index():
-    marsArticle = mongo.db.mars.find_one()
-    return render_template('index.html', listings=marsArticle)
+    articles = mongo.db.articles.find_one()
+    return render_template('index.html', articles=articles)
 
 @app.route('/scrape')
 def scraper():
-    articles = mongo.db.mars.find_one()
+    articles = mongo.db.articles
     data = scrape_nasa.scrape()
     articles.update({}, data, upsert=True)
-    return redirect(url_for("index"), code=302)
+    return redirect('/'), code=302)
 
 
 if __name__ == "__main__":
