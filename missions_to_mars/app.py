@@ -15,7 +15,7 @@ def index():
 @app.route('/scrape')
 def scraper():
     articles = mongo.db.articles
-    data = scrape_nasa.scrape()
+    data = scrape_nasa.scrape_article()
     articles.update({}, data, upsert=True)
     return redirect(('/'), code=302)
 
