@@ -17,7 +17,7 @@ def scraper():
     articles = mongo.db.articles
     data = scrape_nasa.scrape()
     articles.update({}, data, upsert=True)
-    return redirect('/'), code=302)
+    return redirect(('/'), code=302)
 
 
 if __name__ == "__main__":
