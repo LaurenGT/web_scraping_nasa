@@ -9,7 +9,7 @@ def scrape_article():
 
     time.sleep(10)
 
-    articles = {}
+    mars_info = {}
 
     news_url = "https://mars.nasa.gov/news/"
     browser.visit(news_url)
@@ -17,27 +17,28 @@ def scrape_article():
     html = browser.html
     soup = BeautifulSoup(html, "html.parser")
 
-    articles['title'] = soup.find_all("div", class_="content_title")[1].text
-    articles['teaser'] = soup.find("div", class_="article_teaser_body").text    
+    mars_info['title'] = soup.find_all("div", class_="content_title")[1].text
+    mars_info['teaser'] = soup.find("div", class_="article_teaser_body").text    
 
-    return articles
+    # return articles
+
+    # mars_facts_url = "https://space-facts.com/mars/"
+    # browser.visit(mars_facts_url)
+
     browser.quit
 
-def scrape_image():
-    executable_path = {'executable_path': ChromeDriverManager().install()}
-    browser = Browser('chrome', **executable_path, headless=True)
+    featured_image_url = "https://data-class-jpl-space.s3.amazonaws.com/JPL_Space/index.html"
+    browser.visit(featured_image_url)
 
-    time.sleep(10)
+    visit_image = browser.links.find_by_partial_href("featured").click()
+    base_url = "https://data-class-jpl-space.s3.amazonaws.com/JPL_Space/"
 
-    img_url = "https://data-class-jpl-space.s3.amazonaws.com/JPL_Space/index.html"
-    browser.visit(img_url)
+    html=browser.html
+    soup=BeautifulSoup(html,"html.parser")
+    image = soup.find('img', class_='fancybox-image')
+    src_img = image['src']
+    reference_img_url = base_url + src_img
 
-    html = browser.html
-    soup = BeautifulSoup(html, "html.parser")
+    return reference_img_url
 
-    browser.links.find_by_partial_text("FULL IMAGE").click()
-
-
-    featured_img = soup.find('img', class_="fancybox-image").get("src")
-
-    return featured_img
+    browser.quit

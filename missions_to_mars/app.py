@@ -16,6 +16,7 @@ def index():
 def scraper():
     articles = mongo.db.articles
     data = scrape_nasa.scrape_article()
+    data = scrape_nasa.feature_image()
     articles.update({}, data, upsert=True)
     return redirect(('/'), code=302)
 
