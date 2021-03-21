@@ -7,6 +7,7 @@
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <link rel="stylesheet" href="styles.css">
 
     <title>Missions to Mars</title>
   </head>
@@ -20,44 +21,58 @@
         <div class="card-body">
           <h2 class="card-title">Missions to Mars</h2>
           <p class="card-text" style="font-size: larger;">Get the latest from NASA's MARS Exploration Program</p>
-          <a href="/scrape" class="btn btn-primary">Get Latest</a>
+          <a href="/scrape" class="btn btn-primary">Get Latest Updates</a>
         </div>
       </div>
     </div>
 
     <div class="container-fluid">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-xs-12 col-md-6">
           <div class="content-title">
             <ul>
-              {{ mars_info.title }}
+              <h3>Latest News Article</h3>
+              <strong>{{ mars_info.title }}</strong>
+              <p>{{ mars_info.teaser }}</p>
               <br>
-              {{ mars_info.teaser }}
-              <br>
-              {{ mars_info.data_zip}}
+              <h3>Featured Image</h3>
+              <img src="{{ mars_info.reference_img_url }}" class="img-responsive" alt="feature image">
             </ul>
           </div>
         </div>
-        <div class="col-md-6">
-          <img src="{{ mars_info.reference_img_url }}" class="img-responsive" alt="feature image">
+        <div class="col-xs-12 col-md-6">
+          <table class="table table-lined">
+            <h3>Mars Planet Profile</h3>
+            <tr>
+              <th></th>
+              <th></th>
+            </tr> 
+            {% for key, value in mars_info.data_zip.items() %}
+            <tr>
+              <th>{{key}}</th>
+              <th>{{value}}</th>
+            </tr>
+            {% endfor %}
+          </table>
+          
         </div>
       </div>
     </div>
 
-    <div class="container-fluid">
+    <div class="container-fluid" id="hemisphere-images">
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-xs-12 col-md-6">
           <img src="{{ mars_info.cerb_hem }}" class="img-responsive" alt="Cerberus Hemisphere">
         </div>
-        <div class="col-md-6">
+        <div class="col-xs-12 col-md-6">
           <img src="{{ mars_info.schi_hem }}" class="img-responsive" alt="Schiaparelli Hemisphere">
         </div>
       </div>
       <div class="row">
-        <div class="col-md-6">
+        <div class="col-xs-12 col-md-6">
           <img src="{{ mars_info.syr_hem }}" class="img-responsive" alt="Syrtis Major Hemisphere">
         </div>
-        <div class="col-md-6">
+        <div class="col-xs-12 col-md-6">
           <img src="{{ mars_info.vall_hem }}" class="img-responsive" alt="Valles Marineris Hemisphere">
         </div>
       </div>
