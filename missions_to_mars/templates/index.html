@@ -30,13 +30,14 @@
         <div class="col-md-6">
           <div class="content-title">
             <ul>
-              {{ articles.title }}
+              {{ mars_info.title }}
               <br>
-              {{ articles.teaser }}
-              <br>
-              {{ reference_img_url }}
+              {{ mars_info.teaser }}
             </ul>
           </div>
+        </div>
+        <div class="col-md-6">
+          <img src="{{ mars_info.reference_img_url }}" class="img-responsive" alt="feature image">
         </div>
 
       </div>

@@ -3,7 +3,7 @@ from bs4 import BeautifulSoup
 from webdriver_manager.chrome import ChromeDriverManager
 import time
 
-def scrape_article():
+def scrape():
     executable_path = {'executable_path': ChromeDriverManager().install()}
     browser = Browser('chrome', **executable_path, headless=True)
 
@@ -18,14 +18,9 @@ def scrape_article():
     soup = BeautifulSoup(html, "html.parser")
 
     mars_info['title'] = soup.find_all("div", class_="content_title")[1].text
+    print(soup.find("div", class_="article_teaser_body"))
     mars_info['teaser'] = soup.find("div", class_="article_teaser_body").text    
 
-    # return articles
-
-    # mars_facts_url = "https://space-facts.com/mars/"
-    # browser.visit(mars_facts_url)
-
-    browser.quit
 
     featured_image_url = "https://data-class-jpl-space.s3.amazonaws.com/JPL_Space/index.html"
     browser.visit(featured_image_url)
@@ -38,7 +33,8 @@ def scrape_article():
     image = soup.find('img', class_='fancybox-image')
     src_img = image['src']
     reference_img_url = base_url + src_img
+    mars_info['reference_img_url'] = reference_img_url
 
-    return reference_img_url
-
-    browser.quit
+    browser.quit()
+    
+    return mars_info
