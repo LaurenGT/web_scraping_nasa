@@ -91,6 +91,25 @@ def scrape():
     src_img = vall_image['src']
     vall_url = base_url + src_img
     mars_info['vall_hem'] = vall_url
-    
+
+    # scrape info table
+    facts_url = "https://space-facts.com/mars/"
+    browser.visit(facts_url)
+
+    html=browser.html
+    soup=BeautifulSoup(html,"html.parser")
+
+    facts_table = soup.find_all('table', class_="tablepress tablepress-id-p-mars")[0]('tr')
+
+    key=[]
+    value=[]
+    for tr in facts_table:
+        col_one = tr.find('td', class_="column-1").text
+        col_two = tr.find('td', class_="column-2").text
+        key.append(col_one)
+        value.append(col_two)
+
+    mars_info["data_zip"] = list(zip(key,value))
+
     return mars_info
     browser.quit()
